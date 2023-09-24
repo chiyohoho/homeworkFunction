@@ -122,17 +122,23 @@ const setDiem = () => {
                     bonusDoiTuong += 1
                     break
             }
-            afterBonus = tong3Mon + bonusKhuVuc + bonusDoiTuong
-            if (afterBonus >= diemChuan) {
-                showResult.textContent = `Chúc mừng bạn đã đậu với tổng điểm là ${afterBonus} `
-                showIconSort.className = "fa-regular fa-thumbs-up"
+
+            if (diemMonA > 10 || diemMonB > 10 || diemMonC > 10) {
+                alert("Ông thi ở đâu mà được trên 10 điểm")
             } else {
-                showResult.textContent = `Với số điểm ${afterBonus}, bạn đã trượt `
-                showIconSort.className = "fa-regular fa-thumbs-down"
+                afterBonus = tong3Mon + bonusKhuVuc + bonusDoiTuong
+                if (afterBonus >= diemChuan) {
+                    showResult.textContent = `Chúc mừng bạn đã đậu với tổng điểm là ${afterBonus} `
+                    showIconSort.className = "fa-regular fa-thumbs-up"
+                } else {
+                    showResult.textContent = `Với số điểm ${afterBonus}, bạn đã trượt `
+                    showIconSort.className = "fa-regular fa-thumbs-down"
+                }
+                showResult.style.visibility = "visible"
+                showIconSort.style.visibility = "visible"
+                showResultSort.style.visibility = "visible"
             }
-            showResult.style.visibility = "visible"
-            showIconSort.style.visibility = "visible"
-            showResultSort.style.visibility = "visible"
+
         }
     } else {
         alert("Vui lòng điền đẩy đủ thông tin")
