@@ -76,8 +76,8 @@ const showBaiTap1 = () => {
 }
 const setDiem = () => {
     const diemChuan = Number(callElement("#bai1_input_1").value)
-    const khuVuc = Number(callElement("#select_khuvuc").value)
-    const doiTuong = Number(callElement("#select_doituong").value)
+    const khuVuc = (callElement("#select_khuvuc").value)
+    const doiTuong = (callElement("#select_doituong").value)
     const diemMonA = Number(callElement("#bai1_input_2").value)
     const diemMonB = Number(callElement("#bai1_input_3").value)
     const diemMonC = Number(callElement("#bai1_input_4").value)
@@ -91,7 +91,7 @@ const setDiem = () => {
     const showResultSort = callElement("#show_body_result")
 
     if (diemChuan && diemMonA && diemMonB && diemMonC && khuVuc && doiTuong) {
-        if (khuVuc === 0 || doiTuong === 0) {
+        if (khuVuc == 0 || doiTuong == 0) {
             alert("Vui lòng bổ sung đối tượng và khu vực")
         } else {
             switch (khuVuc) {
