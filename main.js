@@ -32,14 +32,14 @@ const showBaiTap1 = () => {
                         <option disabled value="1">Khu Vực 1 = +0.5 điểm</option>
                         <option disabled value="2">Khu Vực 2 = +1.0 điểm</option>
                         <option disabled value="3">Khu Vực 3 = +1.5 điểm</option>
-                        <option disabled value="4">Big City Boy = Không cộng điểm </option>
+                        <option disabled value="4">Khu Vực 4 = Không cộng điểm </option>
                 </select>
                 <select name="luuy_doituong" id="" style="padding: 5px; outline: none; font-size: 16px; width: 30%; border-radius: 5px">
                         <option selected disabled hidden value="0">Lưu ý về đối tượng</option>
                         <option disabled value="1">Đối tượng 1 = +0.25 điểm</option>
                         <option disabled value="2">Đối tượng 2 = +0.5 điểm</option>
-                        <option disabled value="3">Đối tượng 3 = +0.75 điểm</option>
-                        <option disabled value="4">Đối tượng Wibu = +1 điểm </option>
+                        <option disabled value="3">Đối tượng 3 = +1.0 điểm</option>
+                        <option disabled value="4">Đối tượng 4 = Không cộng điểm </option>
                 </select>
             </div>
 
@@ -47,17 +47,17 @@ const showBaiTap1 = () => {
                 <input type="number" placeholder="Nhập điểm chuẩn" id="bai1_input_1" class="bai1_input">
                 <select name="khuvuc" id="select_khuvuc" style="padding: 5px; outline: none; font-size: 16px; width: 30%; border-radius: 5px">
                         <option selected disabled hidden value="0">Chọn khu vực</option>
-                        <option value="1">Khu Vực 1</option>
-                        <option value="2">Khu Vực 2</option>
-                        <option value="3">Khu Vực 3</option>
-                        <option value="4">Big City Boy</option>
+                        <option value="1">Khu Vực 1: Tỉnh lẻ</option>
+                        <option value="2">Khu Vực 2: Trên núi</option>
+                        <option value="3">Khu Vực 3: Vùng sâu, vùng xa </option>
+                        <option value="4">Khu Vực 4: Big City Boy</option>
                     </select>
                 <select name="doituong" id="select_doituong" style="padding: 5px; outline: none; font-size: 16px;width: 30%;border-radius: 5px">
-                        <option selected disabled hidden value="0">Chọn khu vực</option>
-                        <option value="1">Đối tượng 1</option>
-                        <option value="2">Đối tượng 2</option>
-                        <option value="3">Đối tượng 3</option>
-                        <option value="4">Wibu</option>
+                        <option selected disabled hidden value="0">Chọn đối tượng</option>
+                        <option value="1">Đối tượng 1: Hoàn cảnh khó khăn</option>
+                        <option value="2">Đối tượng 2: Con thương binh, liệt sĩ & có công với các mạng</option>
+                        <option value="3">Đối tượng 3: Wibu</option>
+                        <option value="4">Đối tượng 4: !Wibu</option>
                     </select>
                 <input type="number" placeholder="Điểm môn A" id="bai1_input_2" class="bai1_input">
                 <input type="number" placeholder="Điểm môn B" id="bai1_input_3" class="bai1_input">
@@ -76,23 +76,24 @@ const showBaiTap1 = () => {
 }
 const setDiem = () => {
     const diemChuan = Number(callElement("#bai1_input_1").value)
-    const khuVuc = (callElement("#select_khuvuc").value)
-    const doiTuong = (callElement("#select_doituong").value)
+    const khuVucValue = (callElement("#select_khuvuc").value)
+    const doiTuongValue = (callElement("#select_doituong").value)
     const diemMonA = Number(callElement("#bai1_input_2").value)
     const diemMonB = Number(callElement("#bai1_input_3").value)
     const diemMonC = Number(callElement("#bai1_input_4").value)
-    const showResult = callElement("#bai1_result")
-    const showIconSort = callElement("#icon_sort")
-    const showResultSort = callElement("#show_body_result")
+    let khuVuc = Number(callElement("#select_khuvuc").value)
+    let doiTuong = Number(callElement("#select_doituong").value)
 
     const tong3Mon = diemMonA + diemMonB + diemMonC
     let bonusKhuVuc = 0
     let bonusDoiTuong = 0
     let afterBonus
+    const showResult = callElement("#bai1_result")
+    const showIconSort = callElement("#icon_sort")
+    const showResultSort = callElement("#show_body_result")
 
-
-    if (diemChuan && diemMonA && diemMonB && diemMonC && khuVuc && doiTuong) {
-        if (khuVuc == 0 || doiTuong == 0) {
+    if (diemChuan && diemMonA && diemMonB && diemMonC && khuVucValue && doiTuongValue) {
+        if (khuVucValue == 0 || doiTuongValue == 0) {
             alert("Vui lòng bổ sung đối tượng và khu vực")
         } else {
             switch (khuVuc) {
@@ -100,7 +101,7 @@ const setDiem = () => {
                     bonusKhuVuc += 0.5
                     break
                 case 2:
-                    bonusKhuVuc += 0.1
+                    bonusKhuVuc += 1.0
                     break
                 case 3:
                     bonusKhuVuc += 1.5
@@ -117,29 +118,23 @@ const setDiem = () => {
                     bonusDoiTuong += 0.5
                     break
                 case 3:
-                    bonusDoiTuong += 0.75
+                    bonusDoiTuong += 1.0
                     break
                 case 4:
-                    bonusDoiTuong += 1
+                    bonusDoiTuong += 0
                     break
             }
-
-            if (diemMonA > 10 || diemMonB > 10 || diemMonC > 10) {
-                alert("Ông thi ở đâu mà được trên 10 điểm")
+            afterBonus = tong3Mon + bonusKhuVuc + bonusDoiTuong
+            if (afterBonus >= diemChuan) {
+                showResult.textContent = `Chúc mừng bạn đã đậu với tổng điểm là ${afterBonus} `
+                showIconSort.className = "fa-regular fa-thumbs-up"
             } else {
-                afterBonus = tong3Mon + bonusKhuVuc + bonusDoiTuong
-                if (afterBonus >= diemChuan) {
-                    showResult.textContent = `Chúc mừng bạn đã đậu với tổng điểm là ${afterBonus} `
-                    showIconSort.className = "fa-regular fa-thumbs-up"
-                } else {
-                    showResult.textContent = `Với số điểm ${afterBonus}, bạn đã trượt `
-                    showIconSort.className = "fa-regular fa-thumbs-down"
-                }
-                showResult.style.visibility = "visible"
-                showIconSort.style.visibility = "visible"
-                showResultSort.style.visibility = "visible"
+                showResult.textContent = `Với số điểm ${afterBonus}, bạn đã trượt `
+                showIconSort.className = "fa-regular fa-thumbs-down"
             }
-
+            showResult.style.visibility = "visible"
+            showIconSort.style.visibility = "visible"
+            showResultSort.style.visibility = "visible"
         }
     } else {
         alert("Vui lòng điền đẩy đủ thông tin")
@@ -314,7 +309,7 @@ const showBaiTap4 = () => {
                 <i id="icon_sort" class="fa-solid fa-arrow-down-1-9" style="visibility: hidden"></i>
                 <span id="bai1_result" class="show_bai1_result"></span>
                 <br>
-                <span id="bai2_result" class="show_bai1_result" style=""></span>
+                <span id="bai2_result" class="show_bai1_result"></span>
             </div>
     `
     showContent.innerHTML = str
@@ -335,13 +330,9 @@ const tinhTienVeMayBay = () => {
     const soLuongVe = Number(callElement("#bai1_input_2").value)
     const soLuongSuatAn = Number(callElement("#bai1_input_1").value)
     let giaVe = 0
-    let giaVeAfter5 = 0
     let giaSuatAn = 100
-    let giaSuatAnDiscount = 80
     let total = 0
     let totalSuatAn = 0
-    let soLuongVeAfter5 = 0
-    let totalAfter5 = 0
 
     const showResult = callElement("#bai1_result")
     const showResult1 = callElement("#bai2_result")
@@ -352,18 +343,13 @@ const tinhTienVeMayBay = () => {
         if (hangVe === 0) {
             alert("Vui lòng chọn hạng ghế")
         } else if (hangVe === 2) {
-            if (soLuongVe <= 4) {
+            if (soLuongVe <= 5)
                 giaVe = 5000
-                total = giaVe * soLuongVe
-                showResult1.textContent = ""
-            } else {
-                giaVe = 5000
-                giaVeAfter5 = 4500
-                soLuongVeAfter5 = soLuongVe - 4
-                totalAfter5 = soLuongVeAfter5 * giaVeAfter5
-                total = (5000 * 4) + totalAfter5
-                showResult1.textContent = `Lưu ý: vì bạn đã mua trên 4 vé hạng thương gia, nên giá của vé thứ 5 trở đi sẽ là ${giaVeAfter5}K`
+            else {
+                giaVe = 4500
+                showResult1.textContent = `Lưu ý: vì bạn đã mua trên 5 vé hạng thương gia, nên giá của mỗi vé sẽ là ${giaVe}K`
             }
+            total = giaVe * soLuongVe
             showResult.textContent = `Bạn đã đặt ${soLuongVe} vé hạng ghế thương gia, tổng số tiền bạn cần thanh toán là ${total}K VND`
             showIconSort.className = "fa-solid fa-money-bill-wave"
             showResult.style.visibility = "visible"
@@ -371,11 +357,9 @@ const tinhTienVeMayBay = () => {
             showResultSort.style.visibility = "visible"
         } else {
             giaVe = 1000
-            if (soLuongVe > 10) {
+            if (soLuongVe >= 10) {
                 giaSuatAn = 80
                 showResult1.textContent = `Lưu ý: vì bạn đã mua trên 10 vé, nên giá của mỗi suất ăn là ${giaSuatAn}K VND`
-            } else {
-                showResult1.textContent = ``
             }
 
             if (soLuongSuatAn >= 1) {
@@ -392,6 +376,7 @@ const tinhTienVeMayBay = () => {
             showResult.style.visibility = "visible"
             showIconSort.style.visibility = "visible"
             showResultSort.style.visibility = "visible"
+
         }
     } else {
         alert("Vui lòng nhập số lượng vé")
