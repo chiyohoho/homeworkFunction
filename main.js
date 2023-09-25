@@ -81,14 +81,15 @@ const setDiem = () => {
     const diemMonA = Number(callElement("#bai1_input_2").value)
     const diemMonB = Number(callElement("#bai1_input_3").value)
     const diemMonC = Number(callElement("#bai1_input_4").value)
+    const showResult = callElement("#bai1_result")
+    const showIconSort = callElement("#icon_sort")
+    const showResultSort = callElement("#show_body_result")
 
     const tong3Mon = diemMonA + diemMonB + diemMonC
     let bonusKhuVuc = 0
     let bonusDoiTuong = 0
     let afterBonus
-    const showResult = callElement("#bai1_result")
-    const showIconSort = callElement("#icon_sort")
-    const showResultSort = callElement("#show_body_result")
+
 
     if (diemChuan && diemMonA && diemMonB && diemMonC && khuVuc && doiTuong) {
         if (khuVuc == 0 || doiTuong == 0) {
@@ -313,7 +314,7 @@ const showBaiTap4 = () => {
                 <i id="icon_sort" class="fa-solid fa-arrow-down-1-9" style="visibility: hidden"></i>
                 <span id="bai1_result" class="show_bai1_result"></span>
                 <br>
-                <span id="bai2_result" class="show_bai1_result"></span>
+                <span id="bai2_result" class="show_bai1_result" style=""></span>
             </div>
     `
     showContent.innerHTML = str
@@ -334,9 +335,13 @@ const tinhTienVeMayBay = () => {
     const soLuongVe = Number(callElement("#bai1_input_2").value)
     const soLuongSuatAn = Number(callElement("#bai1_input_1").value)
     let giaVe = 0
+    let giaVeAfter5 = 0
     let giaSuatAn = 100
+    let giaSuatAnDiscount = 80
     let total = 0
     let totalSuatAn = 0
+    let soLuongVeAfter5 = 0
+    let totalAfter5 = 0
 
     const showResult = callElement("#bai1_result")
     const showResult1 = callElement("#bai2_result")
@@ -347,13 +352,18 @@ const tinhTienVeMayBay = () => {
         if (hangVe === 0) {
             alert("Vui lòng chọn hạng ghế")
         } else if (hangVe === 2) {
-            if (soLuongVe <= 5)
+            if (soLuongVe <= 4) {
                 giaVe = 5000
-            else {
-                giaVe = 4500
-                showResult1.textContent = `Lưu ý: vì bạn đã mua trên 5 vé hạng thương gia, nên giá của mỗi vé sẽ là ${giaVe}K`
+                total = giaVe * soLuongVe
+                showResult1.textContent = ""
+            } else {
+                giaVe = 5000
+                giaVeAfter5 = 4500
+                soLuongVeAfter5 = soLuongVe - 4
+                totalAfter5 = soLuongVeAfter5 * giaVeAfter5
+                total = (5000 * 4) + totalAfter5
+                showResult1.textContent = `Lưu ý: vì bạn đã mua trên 4 vé hạng thương gia, nên giá của vé thứ 5 trở đi sẽ là ${giaVeAfter5}K`
             }
-            total = giaVe * soLuongVe
             showResult.textContent = `Bạn đã đặt ${soLuongVe} vé hạng ghế thương gia, tổng số tiền bạn cần thanh toán là ${total}K VND`
             showIconSort.className = "fa-solid fa-money-bill-wave"
             showResult.style.visibility = "visible"
@@ -361,9 +371,11 @@ const tinhTienVeMayBay = () => {
             showResultSort.style.visibility = "visible"
         } else {
             giaVe = 1000
-            if (soLuongVe >= 10) {
+            if (soLuongVe > 10) {
                 giaSuatAn = 80
                 showResult1.textContent = `Lưu ý: vì bạn đã mua trên 10 vé, nên giá của mỗi suất ăn là ${giaSuatAn}K VND`
+            } else {
+                showResult1.textContent = ``
             }
 
             if (soLuongSuatAn >= 1) {
@@ -380,7 +392,6 @@ const tinhTienVeMayBay = () => {
             showResult.style.visibility = "visible"
             showIconSort.style.visibility = "visible"
             showResultSort.style.visibility = "visible"
-
         }
     } else {
         alert("Vui lòng nhập số lượng vé")
